@@ -1,0 +1,77 @@
+{
+    "cli": {
+        "version": ">= 5.4.0"
+    },
+    "build": {
+        "development": {
+            "node": "18.17.0",
+            "developmentClient": true,
+            "distribution": "internal",
+
+            "env": {
+                "NODE_ENV": "development"
+            }
+        },
+        "localInternal": {
+            "node": "18.17.0",
+            "distribution": "internal",
+            "env": {
+                "NODE_ENV": "development"
+            }
+        },
+        "stageInternal": {
+            "node": "18.17.0",
+            "distribution": "internal",
+            "env": {
+                "NODE_ENV": "test"
+            }
+        },
+        "preview": {
+            "distribution": "internal",
+            "node": "18.17.0",
+            "env": {
+                "NODE_ENV": "test"
+            }
+        },
+        "production": {
+            "node": "18.17.0",
+            "env": {
+                "NODE_ENV": "production"
+            },
+            "channel": "production"
+        },
+        "emulatorStage": {
+            "node": "18.17.0",
+            "env": {
+                "NODE_ENV": "test"
+            },
+            "android": {
+                "buildType": "apk"
+            },
+            "ios": {
+                "simulator": true
+            }
+        },
+        "emulatorProduction": {
+            "node": "18.17.0",
+            "env": {
+                "NODE_ENV": "production"
+            },
+            "android": {
+                "buildType": "apk"
+            },
+            "ios": {
+                "simulator": true
+            }
+        }
+    },
+    "submit": {
+        "production": {
+            "ios": {
+                "appleId": "yi@vividtheory.com",
+                "ascAppId": "6458224478",
+                "appleTeamId": "LV9NQLUE34"
+            }
+        }
+    }
+}
