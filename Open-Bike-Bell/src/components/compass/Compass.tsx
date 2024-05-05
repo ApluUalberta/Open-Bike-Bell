@@ -40,13 +40,15 @@ const Compass = () => {
   };
 
   return (
-    <Grid style={{backgroundColor: "black"}}>
+    <Grid style={{backgroundColor: "black",
+      rowGap: 2,
+    }}>
 
         <Row style={{alignItems: "center"}} size={0.1}>
           <Col style={{alignItems: "center"}}>
             <View style={{width: width, alignItems: "center", bottom: 0}}>
               <Image
-                source={require("./assets/compass_pointer.png")}
+                source={require("./../../../assets/compass/compass_pointer.png")}
                 style={{
                   height: height / 26,
                   resizeMode: "contain",
@@ -71,7 +73,7 @@ const Compass = () => {
 
           <Col style={{alignItems: "center"}}>
             <Image
-              source={require("./assets/compass_bg.png")}
+              source={require("./../../../assets/compass/compass_bg.png")}
               style={{
                 height: width - 80,
                 justifyContent: "center",
