@@ -63,10 +63,9 @@ const Compass = () => {
                 justifyContent: "center",
                 alignItems: "center",
                 resizeMode: "contain",
-              }}/>
+              }}></Image>
       </View>
       
-      <Bell/>
       </View>
     </View>
   );

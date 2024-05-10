@@ -12,7 +12,6 @@ export default function App() {
     <Grid style={styles.container}>
       <Row>
       <Compass/>
-
       </Row>
     </Grid>
   );
