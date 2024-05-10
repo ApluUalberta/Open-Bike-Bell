@@ -7,12 +7,11 @@ const Bell = () => {
     const [sound, setSound] = useState<Audio.Sound>();
 
     const playSound = async () => {
-    console.log(" playing the sound");
-    const {sound} = await Audio.Sound.createAsync(require('./assets/bell/default.mp3'));
+    const {sound} = await Audio.Sound.createAsync(require('./../../../assets/bell/default.mp3'));
     setSound(sound);
     await sound.playAsync();
   }
-  return (<Button title={"Bell"} onPress={playSound}></Button>);
+  return (<Button title={"Ring riing"} onPress={playSound}></Button>);
 }
 
 export default Bell;
