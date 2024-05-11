@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View , Image, Dimensions} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View , Image, Dimensions, ImageBackground} from 'react-native';
 import { Magnetometer } from 'expo-sensors';
 import { Subscription } from 'expo-sensors/build/DeviceSensor';
 import Bell from '../bell/Bell';
@@ -60,14 +60,16 @@ const Compass = () => {
         />
       </View>
       <View style={{transform:[{rotate: `${headingAngle.toString()} deg`}],  padding: 2}}>
-        <Image source={require('./../../../assets/compass/compass_bg.png')}  style={{
+        <ImageBackground source={require('./../../../assets/compass/compass_bg.png')}  style={{
                 height: width - 80,
                 justifyContent: "center",
                 alignItems: "center",
-                resizeMode: "contain",
-              }}></Image>
+              }} resizeMode='contain'>
+              
+        </ImageBackground>
+        
+        <Bell/>
       </View>
-      <Bell/>
       </View>
     </View>
   );
