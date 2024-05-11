@@ -52,10 +52,12 @@ const Compass = () => {
       <View style=
       {styles.container}>
       <View style={{ padding: 2, alignItems:"center"}}>
-        <Image source={require('./../../../assets/compass/compass_pointer.png')}                style={{
-                  height: height / 26,
-                  resizeMode: "contain",
-                }} />
+        <Image source={require('./../../../assets/compass/compass_pointer.png')}                
+          style={{
+            height: height / 26,
+            resizeMode: "contain",
+          }} 
+        />
       </View>
       <View style={{transform:[{rotate: `${headingAngle.toString()} deg`}],  padding: 2}}>
         <Image source={require('./../../../assets/compass/compass_bg.png')}  style={{
@@ -65,7 +67,7 @@ const Compass = () => {
                 resizeMode: "contain",
               }}></Image>
       </View>
-      
+      <Bell/>
       </View>
     </View>
   );
