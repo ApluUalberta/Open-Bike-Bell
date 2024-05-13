@@ -1,93 +1,88 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View , Image, Dimensions, ImageBackground} from 'react-native';
 import { Magnetometer } from 'expo-sensors';
-import LPF from "lpf";
-import { View, Image, Text, Dimensions } from 'react-native';
-import {Grid, Col, Row} from "react-native-easy-grid";
 import { Subscription } from 'expo-sensors/build/DeviceSensor';
+import Bell from '../bell/Bell';
 
 const { height, width } = Dimensions.get('window');
 const Compass = () => {
-    const [magnetometer, setMagnetometer] = useState(0);
-    const [subscription, setSubscription] = useState<Subscription | null>(null);
-    const [{ x, y, z }, setData] = useState({
-        x: 0,
-        y: 0,
-        z: 0,
-      });
+  Magnetometer.setUpdateInterval(8.3);
+  const [headingAngle, setHeadingAngle] = useState(0) 
 
-      const _subscribe = () => {
-        setSubscription(
-          Magnetometer.addListener(result => {
-            setData(result);
-            setMagnetometer(Math.atan2(result.y, result.x));
-          })
-        );
-      };
-    
-      const _unsubscribe = () => {
-        subscription && subscription.remove();
-        setSubscription(null);
-      };
+  const [subscription, setSubscription] = useState<Subscription>();
 
-      useEffect(() => {
-        _subscribe();
-        return () => _unsubscribe();
-      }, []);
-  const _degree = (magnetometer:number) => {
-    return magnetometer - 90 >= 0
-      ? magnetometer - 90
-      : magnetometer + 271;
+  const _subscribe = () => {
+    setSubscription(
+      Magnetometer.addListener(result => {
+        setCompassHeading(result.x, result.y);
+      })
+    );
+  };
+  const setCompassHeading = (magX: number, magY: number) => {
+    // Convert magnetic field readings from microteslas to Gauss
+    // 1 microtesla = 0.0001 Gauss
+    var xGauss = magX * 0.0001;
+    var yGauss = magY * 0.0001;
+
+    // Calculate the heading in radians
+    var headingRadians = Math.atan2(Math.floor(yGauss), Math.floor(xGauss));
+
+    // Convert to degrees from radians
+    var headingDegrees = headingRadians * (180 / Math.PI);
+
+    // Adjust for a 0-360 degrees range
+    if (headingDegrees < 0) {
+        headingDegrees += 360;
+    }
+    setHeadingAngle(headingDegrees);
+}
+
+  const _unsubscribe = () => {
+    subscription && subscription.remove();
+    setSubscription(undefined);
   };
 
+  useEffect(() => {
+    _subscribe();
+    return () => _unsubscribe();
+  }, []);
+
   return (
-    <Grid style={{backgroundColor: "black",
-      rowGap: 2,
-    }}>
-
-        <Row style={{alignItems: "center"}} size={0.1}>
-          <Col style={{alignItems: "center"}}>
-            <View style={{width: width, alignItems: "center", bottom: 0}}>
-              <Image
-                source={require("./../../../assets/compass/compass_pointer.png")}
-                style={{
-                  height: height / 26,
-                  resizeMode: "contain",
-                }}
-              />
-            </View>
-          </Col>
-        </Row>
-
-        <Row style={{alignItems: "center"}} size={2}>
-          <Text
-            style={{
-              color: "#fff",
-              fontSize: height / 27,
-              width: width,
-              position: "absolute",
-              textAlign: "center",
-            }}
-          >
-            {_degree(magnetometer)}
-          </Text>
-
-          <Col style={{alignItems: "center"}}>
-            <Image
-              source={require("./../../../assets/compass/compass_bg.png")}
-              style={{
+    <View style={styles.container}>
+      <View style=
+      {styles.container}>
+      <View style={{ padding: 2, alignItems:"center"}}>
+        <Image source={require('./../../../assets/compass/compass_pointer.png')}                
+          style={{
+            height: height / 26,
+            resizeMode: "contain",
+          }} 
+        />
+      </View>
+      <View style={{transform:[{rotate: `${headingAngle.toString()} deg`}],  padding: 2}}>
+        <ImageBackground source={require('./../../../assets/compass/compass_bg.png')}  style={{
                 height: width - 80,
                 justifyContent: "center",
                 alignItems: "center",
-                resizeMode: "contain",
-                transform: [
-                  {rotate: 360 - magnetometer + "deg"},
-                ],
-              }}
-            />
-          </Col>
-        </Row>
-      </Grid>
-  )
+              }} resizeMode='contain'>
+              
+        </ImageBackground>
+        
+        <Bell/>
+      </View>
+      </View>
+    </View>
+  );
 }
 
-export default Compass
+export default Compass;
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+  },
+  text: {
+    textAlign: 'center',
+  },
+});
