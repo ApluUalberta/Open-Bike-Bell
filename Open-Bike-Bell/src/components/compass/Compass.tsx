@@ -1,19 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View , Image, Dimensions, ImageBackground} from 'react-native';
-import { Magnetometer } from 'expo-sensors';
-import { Subscription } from 'expo-sensors/build/DeviceSensor';
-import Bell from '../bell/Bell';
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+  Dimensions,
+  ImageBackground,
+} from "react-native";
+import { Magnetometer } from "expo-sensors";
+import { Subscription } from "expo-sensors/build/DeviceSensor";
+import Bell from "../bell/Bell";
 
-const { height, width } = Dimensions.get('window');
+const { height, width } = Dimensions.get("window");
 const Compass = () => {
   Magnetometer.setUpdateInterval(8.3);
-  const [headingAngle, setHeadingAngle] = useState(0) 
+  const [headingAngle, setHeadingAngle] = useState(0);
 
   const [subscription, setSubscription] = useState<Subscription>();
 
   const _subscribe = () => {
     setSubscription(
-      Magnetometer.addListener(result => {
+      Magnetometer.addListener((result) => {
         setCompassHeading(result.x, result.y);
       })
     );
@@ -32,10 +40,10 @@ const Compass = () => {
 
     // Adjust for a 0-360 degrees range
     if (headingDegrees < 0) {
-        headingDegrees += 360;
+      headingDegrees += 360;
     }
     setHeadingAngle(headingDegrees);
-}
+  };
 
   const _unsubscribe = () => {
     subscription && subscription.remove();
@@ -49,40 +57,46 @@ const Compass = () => {
 
   return (
     <View style={styles.container}>
-      <View style=
-      {styles.container}>
-      <View style={{ padding: 2, alignItems:"center"}}>
-        <Image source={require('./../../../assets/compass/compass_pointer.png')}                
+      <View style={styles.container}>
+        <View style={{ padding: 2, alignItems: "center" }}>
+          <Image
+            source={require("./../../../assets/compass/compass_pointer.png")}
+            style={{
+              height: height / 26,
+              resizeMode: "contain",
+            }}
+          />
+        </View>
+        <View
           style={{
-            height: height / 26,
-            resizeMode: "contain",
-          }} 
-        />
-      </View>
-      <View style={{transform:[{rotate: `${headingAngle.toString()} deg`}],  padding: 2}}>
-        <ImageBackground source={require('./../../../assets/compass/compass_bg.png')}  style={{
-                height: width - 80,
-                justifyContent: "center",
-                alignItems: "center",
-              }} resizeMode='contain'>
-              
-        </ImageBackground>
-        
-        <Bell/>
-      </View>
+            padding: 2,
+            transform: [{ rotate: `${headingAngle.toString()} deg` }],
+          }}
+        >
+          <Image
+            source={require("./../../../assets/compass/compass_bg.png")}
+            style={{
+              height: width - 80,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            resizeMode="contain"
+          ></Image>
+        </View>
+        {/* <Bell /> */}
       </View>
     </View>
   );
-}
+};
 
 export default Compass;
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
+    justifyContent: "center",
     paddingHorizontal: 10,
   },
   text: {
-    textAlign: 'center',
+    textAlign: "center",
   },
 });
