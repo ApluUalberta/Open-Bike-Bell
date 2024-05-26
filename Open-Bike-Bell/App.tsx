@@ -12,12 +12,9 @@ export default function App() {
       <Row>
         <Compass />
       </Row>
-      <Row>
-        <Bell />
-      </Row>
-      <Row>
+      {/* <Row>
         <Speedometer />
-      </Row>
+      </Row> */}
     </Grid>
   );
 }

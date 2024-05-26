@@ -11,6 +11,7 @@ import {
 import { Magnetometer } from "expo-sensors";
 import { Subscription } from "expo-sensors/build/DeviceSensor";
 import Bell from "../bell/Bell";
+import Speedometer from "../Speedometer/Speedometer";
 
 const { height, width } = Dimensions.get("window");
 const Compass = () => {
@@ -82,6 +83,12 @@ const Compass = () => {
             }}
             resizeMode="contain"
           ></Image>
+        </View>
+        <View>
+          <Bell />
+        </View>
+        <View>
+          <Speedometer />
         </View>
       </View>
     </View>
