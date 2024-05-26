@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Audio } from "expo-av";
-import { FAB } from "react-native-paper";
-
+import { Button } from "react-native";
 const Bell = () => {
   const [sound, setSound] = useState<Audio.Sound>();
 
@@ -12,15 +11,7 @@ const Bell = () => {
     setSound(sound);
     await sound.playAsync();
   };
-  return (
-    <FAB
-      onPress={playSound}
-      style={{
-        borderRadius: 32,
-      }}
-      icon={{ source: "./../../../assets/bell/Bell.png", direction: "auto" }}
-    ></FAB>
-  );
+  return <Button title={"Ring riing"} onPress={playSound}></Button>;
 };
 
 export default Bell;

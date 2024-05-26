@@ -11,6 +11,7 @@ import {
 import { Magnetometer } from "expo-sensors";
 import { Subscription } from "expo-sensors/build/DeviceSensor";
 import Bell from "../bell/Bell";
+import Speedometer from "../Speedometer/Speedometer";
 
 const { height, width } = Dimensions.get("window");
 const Compass = () => {
@@ -33,7 +34,7 @@ const Compass = () => {
     var yGauss = magY * 0.0001;
 
     // Calculate the heading in radians
-    var headingRadians = Math.atan2(Math.floor(yGauss), Math.floor(xGauss));
+    var headingRadians = Math.atan2(yGauss, xGauss);
 
     // Convert to degrees from radians
     var headingDegrees = headingRadians * (180 / Math.PI);
@@ -83,7 +84,12 @@ const Compass = () => {
             resizeMode="contain"
           ></Image>
         </View>
-        {/* <Bell /> */}
+        <View>
+          <Bell />
+        </View>
+        <View>
+          <Speedometer />
+        </View>
       </View>
     </View>
   );
