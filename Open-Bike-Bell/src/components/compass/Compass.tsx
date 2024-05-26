@@ -33,7 +33,7 @@ const Compass = () => {
     var yGauss = magY * 0.0001;
 
     // Calculate the heading in radians
-    var headingRadians = Math.atan2(Math.floor(yGauss), Math.floor(xGauss));
+    var headingRadians = Math.atan2(yGauss, xGauss);
 
     // Convert to degrees from radians
     var headingDegrees = headingRadians * (180 / Math.PI);
@@ -83,7 +83,7 @@ const Compass = () => {
             resizeMode="contain"
           ></Image>
         </View>
-        {/* <Bell /> */}
+        <Bell />
       </View>
     </View>
   );
