@@ -1,10 +1,7 @@
-import { StatusBar } from "expo-status-bar";
-import { Button, StyleSheet, Text, View } from "react-native";
-import Bell from "./src/components/bell/Bell";
-import React, { useState } from "react";
+import React from "react";
+import { Grid, Row } from "react-native-easy-grid";
+import { styles } from "./src/common/styles";
 import Compass from "./src/components/compass/Compass";
-import { Col, Grid, Row } from "react-native-easy-grid";
-import Speedometer from "./src/components/Speedometer/Speedometer";
 
 export default function App() {
   return (
@@ -18,11 +15,3 @@ export default function App() {
     </Grid>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "black",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

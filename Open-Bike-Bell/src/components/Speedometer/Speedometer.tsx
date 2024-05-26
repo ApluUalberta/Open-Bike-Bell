@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, StyleSheet } from "react-native";
 import * as Location from "expo-location";
+import { styles } from "../../common/styles";
 
 const Speedometer = () => {
   const [speed, setSpeed] = useState(0);
@@ -9,16 +10,18 @@ const Speedometer = () => {
   const updateSpeedAndAltitude = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== "granted") {
-      console.log("Rejected");
       return;
     }
 
     const location = await Location.getCurrentPositionAsync();
-    if (location.coords.speed) setSpeed(location.coords.speed);
+    if (location.coords.speed !== null) {
+      console.log(location);
+
+      setSpeed(location.coords.speed);
+    }
     if (location.coords.altitude) {
       const altDelta = location.coords.altitude - altitudeDelta;
       setAltitudeDelta(altDelta);
-      console.log(altDelta);
     }
   };
   useEffect(() => {
@@ -28,11 +31,16 @@ const Speedometer = () => {
   }, [altitudeDelta, speed]);
   return (
     <View>
-      {/* <Text>
-        Current Speed: {speed ? `${speed.toFixed(2)} km/h` : "Calculating..."}
-      </Text> */}
-      <Button title={`${speed.toFixed(2)} km/h`} />
-      <Button title={`${altitudeDelta} km/h`} />
+      <Text style={styles.text}>
+        Current Speed:
+        {speed !== null ? `${speed.toFixed(2)} km/h` : "Calculating"}
+      </Text>
+      <Text style={styles.text}>
+        Current Altitude:
+        {altitudeDelta}
+      </Text>
+      {/* <Button title={`${speed.toFixed(2)} km/h`} />
+      <Button title={`${altitudeDelta} Degrees`} /> */}
     </View>
   );
 };
