@@ -83,7 +83,6 @@ const Compass = () => {
             resizeMode="contain"
           ></Image>
         </View>
-        <Bell />
       </View>
     </View>
   );
