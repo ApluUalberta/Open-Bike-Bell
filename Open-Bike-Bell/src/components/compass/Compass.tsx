@@ -1,17 +1,10 @@
-import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Image,
-  Dimensions,
-  ImageBackground,
-} from "react-native";
 import { Magnetometer } from "expo-sensors";
 import { Subscription } from "expo-sensors/build/DeviceSensor";
-import Bell from "../bell/Bell";
+import React, { useEffect, useState } from "react";
+import { Dimensions, Image, StyleSheet, View } from "react-native";
 import Speedometer from "../Speedometer/Speedometer";
+import Bell from "../bell/Bell";
+import { styles } from "../../common/styles";
 
 const { height, width } = Dimensions.get("window");
 const Compass = () => {
@@ -96,13 +89,3 @@ const Compass = () => {
 };
 
 export default Compass;
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    paddingHorizontal: 10,
-  },
-  text: {
-    textAlign: "center",
-  },
-});
