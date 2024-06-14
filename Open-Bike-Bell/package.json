@@ -44,12 +44,14 @@
     }
   },
   "dependencies": {
+    "@expo/vector-icons": "^14.0.2",
     "expo": "~50.0.14",
     "expo-av": "~13.10.5",
     "expo-dev-client": "~3.3.11",
     "expo-location": "~16.5.5",
     "expo-sensors": "^12.9.1",
     "expo-status-bar": "~1.11.1",
+    "expo-task-manager": "~11.7.3",
     "geolib": "^3.3.4",
     "husky": "^9.0.11",
     "lpf": "^1.0.0",

@@ -1,10 +1,9 @@
 import { Magnetometer } from "expo-sensors";
 import { Subscription } from "expo-sensors/build/DeviceSensor";
 import React, { useEffect, useState } from "react";
-import { Dimensions, Image, StyleSheet, View } from "react-native";
-import Speedometer from "../Speedometer/Speedometer";
-import Bell from "../bell/Bell";
+import { Dimensions, Image, ImageBackground, View } from "react-native";
 import { styles } from "../../common/styles";
+import Bell from "../bell/Bell";
 
 const { height, width } = Dimensions.get("window");
 const Compass = () => {
@@ -67,21 +66,18 @@ const Compass = () => {
             transform: [{ rotate: `${headingAngle.toString()} deg` }],
           }}
         >
-          <Image
+          <ImageBackground
             source={require("./../../../assets/compass/compass_bg.png")}
             style={{
               height: width - 80,
+              width: width,
               justifyContent: "center",
               alignItems: "center",
             }}
             resizeMode="contain"
-          ></Image>
-        </View>
-        <View>
-          <Bell />
-        </View>
-        <View>
-          <Speedometer />
+          >
+            <Bell />
+          </ImageBackground>
         </View>
       </View>
     </View>

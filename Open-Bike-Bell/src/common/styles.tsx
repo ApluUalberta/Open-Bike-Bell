@@ -9,4 +9,9 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     color: "#ffffff",
   },
+  theme: {
+    backgroundColor: "black",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
