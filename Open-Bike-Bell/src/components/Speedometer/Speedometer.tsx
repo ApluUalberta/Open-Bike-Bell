@@ -120,17 +120,15 @@ export default function App() {
     <View style={styles.container}>
       <View
         style={{
-          justifyContent: "center",
           alignItems: "center",
         }}
       >
-        <Text style={{ color: "#fff" }}>
-          Speed:{" "}
+        <Text style={{ color: "#fff", fontSize: 64 }}>
           {position?.coords.speed
             ? Math.round(position?.coords.speed * 3.6)
             : "-"}{" "}
-          Km/hr
         </Text>
+        <Text style={{ color: "#fff", fontSize: 24 }}>Km/hr</Text>
       </View>
       <Compass />
 
@@ -141,10 +139,7 @@ export default function App() {
         }}
       >
         <Text style={{ color: "#fff" }}>
-          Longitude: {position?.coords.longitude}
-        </Text>
-        <Text style={{ color: "#fff" }}>
-          Latitude: {position?.coords.latitude}
+          Altitude: {position?.coords.altitude}
         </Text>
       </View>
     </View>
