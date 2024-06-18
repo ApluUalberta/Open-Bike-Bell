@@ -36,6 +36,7 @@ TaskManager.defineTask(
 export default function App() {
   // Define position state: {latitude: number, longitude: number}
   const [position, setPosition] = useState<Location.LocationObject>();
+  const [positionDelta, setPositionDelta] = useState<number>();
 
   // Request permissions right after starting the app
   useEffect(() => {
@@ -53,14 +54,17 @@ export default function App() {
           timeInterval: 500,
         },
         (location) => {
+          if (location.coords.altitude && position?.coords.altitude)
+            setPositionDelta(
+              location.coords.altitude - position.coords.altitude
+            );
           setPosition(location);
         }
       );
     };
+
     subForeground();
   }, []);
-
-  // Start location tracking in foregroun
 
   return (
     <View style={styles.container}>
@@ -85,7 +89,7 @@ export default function App() {
         }}
       >
         <Text style={{ color: "#fff" }}>
-          {position ? position.coords.altitude : "-"} m
+          {positionDelta ? positionDelta : "-"} m
         </Text>
       </View>
     </View>
