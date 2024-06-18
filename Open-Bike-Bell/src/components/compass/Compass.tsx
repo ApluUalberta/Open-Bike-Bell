@@ -63,7 +63,7 @@ const Compass = () => {
         <View
           style={{
             padding: 2,
-            transform: [{ rotate: `${headingAngle.toString()} deg` }],
+            transform: [{ rotate: `-${headingAngle.toString()} deg` }],
           }}
         >
           <ImageBackground
