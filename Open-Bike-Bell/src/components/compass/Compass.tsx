@@ -5,6 +5,7 @@ import { Dimensions, Image, ImageBackground, View } from "react-native";
 import { styles } from "../../common/styles";
 import Bell from "../bell/Bell";
 import LPF from "lpf";
+import { oneEightyPi, twoPi } from "../../../assets/compass/utils/utils";
 
 const { height, width } = Dimensions.get("window");
 const Compass = () => {
@@ -29,11 +30,13 @@ const Compass = () => {
     // Convert to degrees from radians
 
     let angle = 0;
-    if (Math.atan2(magY, magX) >= 0) {
-      angle = Math.atan2(magY, magX) * (180 / Math.PI);
+    const headingRad = Math.atan2(magY, magX);
+    if (headingRad >= 0) {
+      angle = headingRad * oneEightyPi;
     } else {
-      angle = (Math.atan2(magY, magX) + 2 * Math.PI) * (180 / Math.PI);
+      angle = (headingRad + twoPi) * oneEightyPi;
     }
+
     setHeadingAngle(Math.round(LPF.next(angle)));
   };
 
