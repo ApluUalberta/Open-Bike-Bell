@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { Text, View } from "react-native";
 import * as TaskManager from "expo-task-manager";
 import * as Location from "expo-location";
 import { LocationObject } from "expo-location";
@@ -38,30 +38,27 @@ export default function App() {
   const [position, setPosition] = useState<Location.LocationObject>();
   const [positionDelta, setPositionDelta] = useState<number>();
 
+  const requestPermissions = async () => {
+    const foreground = await Location.requestForegroundPermissionsAsync();
+    if (foreground.granted) await Location.requestBackgroundPermissionsAsync();
+  };
+  const subForeground = async () => {
+    foregroundSubscription = await Location.watchPositionAsync(
+      {
+        // For better logs, we set the accuracy to the most sensitive option
+        accuracy: Location.Accuracy.Lowest,
+        timeInterval: 500,
+      },
+      (location) => {
+        if (location.coords.altitude && position?.coords.altitude)
+          setPositionDelta(location.coords.altitude - position.coords.altitude);
+        setPosition(location);
+      }
+    );
+  };
   // Request permissions right after starting the app
   useEffect(() => {
-    const requestPermissions = async () => {
-      const foreground = await Location.requestForegroundPermissionsAsync();
-      if (foreground.granted)
-        await Location.requestBackgroundPermissionsAsync();
-    };
     requestPermissions();
-    const subForeground = async () => {
-      foregroundSubscription = await Location.watchPositionAsync(
-        {
-          // For better logs, we set the accuracy to the most sensitive option
-          accuracy: Location.Accuracy.Lowest,
-          timeInterval: 500,
-        },
-        (location) => {
-          if (location.coords.altitude && position?.coords.altitude)
-            setPositionDelta(
-              location.coords.altitude - position.coords.altitude
-            );
-          setPosition(location);
-        }
-      );
-    };
 
     subForeground();
   }, []);
