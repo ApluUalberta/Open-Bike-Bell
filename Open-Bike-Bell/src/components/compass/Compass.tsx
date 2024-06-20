@@ -22,13 +22,6 @@ const Compass = () => {
     );
   };
   const setCompassHeading = (magX: number, magY: number) => {
-    // Convert magnetic field readings from microteslas to Gauss
-    // 1 microtesla = 0.0001 Gauss
-
-    // Calculate the heading in radians
-
-    // Convert to degrees from radians
-
     let angle = 0;
     const headingRad = Math.atan2(magY, magX);
     if (headingRad >= 0) {

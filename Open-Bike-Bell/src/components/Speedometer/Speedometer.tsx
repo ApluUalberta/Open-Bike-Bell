@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Button, Text, View } from "react-native";
 import * as TaskManager from "expo-task-manager";
 import * as Location from "expo-location";
 import { LocationObject } from "expo-location";
@@ -36,22 +36,29 @@ TaskManager.defineTask(
 export default function App() {
   // Define position state: {latitude: number, longitude: number}
   const [position, setPosition] = useState<Location.LocationObject>();
-  const [positionDelta, setPositionDelta] = useState<number>();
 
   const requestPermissions = async () => {
     const foreground = await Location.requestForegroundPermissionsAsync();
     if (foreground.granted) await Location.requestBackgroundPermissionsAsync();
   };
-  const subForeground = async () => {
+  const startForegroundUpdate = async () => {
+    // Check if foreground permission is granted
+    const { granted } = await Location.getForegroundPermissionsAsync();
+    if (!granted) {
+      console.log("location tracking denied");
+      return;
+    }
+
+    // Make sure that foreground location tracking is not running
+    foregroundSubscription?.remove();
+
+    // Start watching position in real-time
     foregroundSubscription = await Location.watchPositionAsync(
       {
         // For better logs, we set the accuracy to the most sensitive option
-        accuracy: Location.Accuracy.Lowest,
-        timeInterval: 500,
+        accuracy: Location.Accuracy.BestForNavigation,
       },
       (location) => {
-        if (location.coords.altitude && position?.coords.altitude)
-          setPositionDelta(location.coords.altitude - position.coords.altitude);
         setPosition(location);
       }
     );
@@ -59,12 +66,10 @@ export default function App() {
   // Request permissions right after starting the app
   useEffect(() => {
     requestPermissions();
-
-    subForeground();
   }, []);
-
   return (
     <View style={styles.container}>
+      <Button title="dfdfdf" onPress={() => startForegroundUpdate()} />
       <View
         style={{
           alignItems: "center",
@@ -86,7 +91,7 @@ export default function App() {
         }}
       >
         <Text style={{ color: "#fff" }}>
-          {positionDelta ? positionDelta : "-"} m
+          {position ? position?.coords.altitude : "-"} m
         </Text>
       </View>
     </View>
