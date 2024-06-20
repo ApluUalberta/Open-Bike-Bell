@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { Dimensions, Image, ImageBackground, View } from "react-native";
 import { styles } from "../../common/styles";
 import Bell from "../bell/Bell";
+import LPF from "lpf";
+import { oneEightyPi, twoPi } from "../../../assets/compass/utils/utils";
 
 const { height, width } = Dimensions.get("window");
 const Compass = () => {
@@ -20,22 +22,15 @@ const Compass = () => {
     );
   };
   const setCompassHeading = (magX: number, magY: number) => {
-    // Convert magnetic field readings from microteslas to Gauss
-    // 1 microtesla = 0.0001 Gauss
-    var xGauss = magX * 0.0001;
-    var yGauss = magY * 0.0001;
-
-    // Calculate the heading in radians
-    var headingRadians = Math.atan2(yGauss, xGauss);
-
-    // Convert to degrees from radians
-    var headingDegrees = headingRadians * (180 / Math.PI);
-
-    // Adjust for a 0-360 degrees range
-    if (headingDegrees < 0) {
-      headingDegrees += 360;
+    let angle = 0;
+    const headingRad = Math.atan2(magY, magX);
+    if (headingRad >= 0) {
+      angle = headingRad * oneEightyPi;
+    } else {
+      angle = (headingRad + twoPi) * oneEightyPi;
     }
-    setHeadingAngle(headingDegrees);
+
+    setHeadingAngle(Math.round(LPF.next(angle)));
   };
 
   const _unsubscribe = () => {
@@ -45,6 +40,9 @@ const Compass = () => {
 
   useEffect(() => {
     _subscribe();
+
+    LPF.init([]);
+    LPF.smoothing = 0.15;
     return () => _unsubscribe();
   }, []);
 
@@ -63,7 +61,6 @@ const Compass = () => {
         <View
           style={{
             padding: 2,
-            transform: [{ rotate: `-${headingAngle.toString()} deg` }],
           }}
         >
           <ImageBackground
@@ -73,6 +70,7 @@ const Compass = () => {
               width: width,
               justifyContent: "center",
               alignItems: "center",
+              transform: [{ rotate: 360 - headingAngle + "deg" }],
             }}
             resizeMode="contain"
           >

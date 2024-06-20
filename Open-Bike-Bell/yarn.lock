@@ -4818,7 +4818,7 @@ loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
 
 lpf@^1.0.0:
   version "1.0.0"
-  resolved "https://registry.npmjs.org/lpf/-/lpf-1.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/lpf/-/lpf-1.0.0.tgz#709ed3b160b3754c6bd2c26b5756f449c2e9f07c"
   integrity sha512-ywrI4ZiPYw/AoWXz7ghxRwcJXKk3xldDPeo/SqT3Det6FNM3uTfPizHJwTk1ETYo0SaRYYR1URZAXglwn5Xklg==
 
 lru-cache@^5.1.1:
